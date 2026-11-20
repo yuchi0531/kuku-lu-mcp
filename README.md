@@ -100,8 +100,9 @@ hermes mcp test kuku-lu
 
 ## 制限と注意 / Limitations
 
-- **受信専用**。送信フォーム（`/new.php` POST `sendMail`）は reCAPTCHA トークンを要求するため
-  自動化できません。
+- **受信専用**。送信フォーム（`/new.php` POST `sendMail`）は Cloudflare Turnstile のトークンを要求し、
+  ヘッドレス／Cloudflare未通過の環境ではトークンが発行されないため自動化できません（ヘッドフルChrome＋
+  Xvfbでも `cf_clearance` が取れず実測で失敗、2026-11）。
 - **IP 単位の制限**があり、セッション生成を繰り返すと弾かれます。本実装は 1 インストール =
   1 アカウントで状態をファイルに永続化し、以降はそのセッションハッシュを再利用します
   （`KUKULU_STATE_DIR`、既定 `~/.config/kuku-lu-mcp`）。
